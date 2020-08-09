@@ -4,6 +4,7 @@
 - Install [dotenv]
 - Install [express]
 - Install [@types/express]
+- Install [body-parser]
 
 ## Setup - dev
 - Install [@types/node]
