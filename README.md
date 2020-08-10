@@ -1,7 +1,6 @@
 # Server setup
 
 ## Setup 
-- npm install typeorm -g
 - npm install
 
 ## Run the app:
