@@ -1,18 +1,8 @@
 # Server setup
 
 ## Setup 
-- Install [dotenv]
-- Install [express]
-- Install [@types/express]
-- Install [body-parser]
-
-## Setup - dev
-- Install [@types/node]
-- Install [eslint]
-- Install [eslint-plugin-import]
-- Install [nodemon]
-- Install [ts-node]
-- Install [typescript]
+- npm install typeorm -g
+- npm install
 
 ## Run the app:
 

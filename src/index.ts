@@ -1,6 +1,13 @@
 import App from './server';
 import Config from './config';
+import { logger } from './Lib/logger';
 
-App().listen(Config.PORT, () => {
-    console.log(`App is running at port: ${Config.PORT}`);
-});
+const startServer = async () => {
+    const app = await App();
+    
+    app.listen(Config.PORT, () => {
+        logger.info(`App is running at port: ${Config.PORT}`);
+    });
+}
+
+startServer();
