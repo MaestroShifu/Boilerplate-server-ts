@@ -1,37 +1,60 @@
-import Express from 'express';
+import express from 'express';
 import bodyParser from 'body-parser';
 import helmet from 'helmet';
 import cors from 'cors';
 import compression from 'compression';
-import config from './config';
+import config, { INodeEnv } from './config';
 import 'reflect-metadata';
 import { createDb } from './Lib/db';
 import { logger } from './Lib/logger';
+import indexRouter from './Routes';
 
-const setupApp = async (): Promise<Express.Express> => {
-    const app = Express();
+class Server {
+    
+    /** Base app server */
+    app : express.Application;
 
-    try {
-        const db = await createDb();
-        logger.info(`DB connect: ${db ? config.DB_CONNECTION : ''}`);
-    } catch (error) {
-        logger.error(`DB error: ${error.message}`);
-        throw new Error(error.message);
+    constructor() {
+        this.app = express();
+        
+        this.InitializeConfigurations();
     }
 
-    app.use(helmet());
-    app.use(cors());
-    app.use(compression());
-
-    app.use(bodyParser.urlencoded({ extended: false }));
-    app.use(bodyParser.json());
+    /** Init all server required config */
+    async InitializeConfigurations(){
+        // Setup middlewares
+        this.app.use(helmet());
+        this.app.use(cors());
+        this.app.use(compression());
     
-    app.get("/", (req: Express.Request, res: Express.Response) => {
-        debugger;
-        res.send("Hello World")
-    })
+        this.app.use(bodyParser.urlencoded({ extended: false }));
+        this.app.use(bodyParser.json());
 
-    return app;
+        // Add routes
+        this.RouterManager()
+    }
+
+    /** Add main router to app */
+    RouterManager(){
+        this.app.use(indexRouter);
+    }
+
+    async Start(){
+        return new Promise(async (resolve, reject) => {
+            // Database init
+            const db = await createDb();
+    
+            try {
+                const db = await createDb();
+                logger.info(`DB connect: ${db ? `db of: ${INodeEnv.prod}` : '???'}`);
+            } catch (error) {
+                logger.error(`DB error: ${error.message}`);
+                throw new Error(error.message);
+            }
+            resolve();
+        });
+    }
 }
 
-export default setupApp;
+const server = new Server();
+export default server;
