@@ -1,6 +1,6 @@
 import App from './server';
 import Config from './config';
-import { logger } from './Lib/logger';
+import { logger } from './lib/logger';
 
 const startServer = async () => {
     const app = await App();

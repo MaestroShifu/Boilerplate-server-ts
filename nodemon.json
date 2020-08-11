@@ -9,6 +9,6 @@
         "src",
         ".env"
     ],
-    "exec": "TS_NODE_FILES=true ts-node ./src/index.ts",
+    "exec": "ts-node ./src/index.ts",
     "ext": "ts"
 }
