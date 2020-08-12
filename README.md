@@ -14,6 +14,10 @@
 - `npm run subscriber:create [name]` Crea un subscriber
 - `npm run entity:create [name]` Crea un entity
 
+## Command Unit testing
+- `npm run test` Sirve para correr los unit test
+- `npm run test:debug` Ayuda a correr el debug dentro del test
+
 ### Run app:
 ```
     npm run start # Sirve para correr en produccion
