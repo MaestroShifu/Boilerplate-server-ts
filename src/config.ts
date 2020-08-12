@@ -4,6 +4,7 @@ import * as path from 'path';
 export enum INodeEnv { 
     'dev' = 'dev',
     'prod' = 'prod',
+    'test' = 'test'
 };
 
 dotenv.config({

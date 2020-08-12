@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node ./dist/index.js",
     "start:dev": "nodemon",
-    "start:debug": "export TS_NODE_FILES=true && node --inspect-brk node_modules/.bin/ts-node ./src/index.ts",
+    "start:debug": "node --inspect-brk node_modules/.bin/ts-node ./src/index.ts",
     "typeorm:cli": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js -f ./src/configdb",
     "db:migrate": "npm run typeorm:cli migration:run",
     "db:revert": "npm run typeorm:cli migration:revert",
@@ -16,7 +16,8 @@
     "subscriber:create": "./node_modules/.bin/ts-node ./node_modules/.bin/typeorm -f ./src/configdb subscriber:create -n ",
     "entity:create": "./node_modules/.bin/ts-node ./node_modules/.bin/typeorm -f ./src/configdb entity:create -n ",
     "build": "tsc",
-    "test": "npm test"
+    "test": "NODE_ENV=test jest",
+    "test:debug": "NODE_ENV=test node --inspect-brk ./node_modules/jest/bin/jest.js --runInBand"
   },
   "author": "MaestroShifu",
   "license": "ISC",
@@ -24,6 +25,7 @@
     "@types/compression": "^1.7.0",
     "@types/cors": "^2.8.7",
     "@types/express": "^4.17.6",
+    "@types/supertest": "^2.0.10",
     "body-parser": "^1.19.0",
     "compression": "^1.7.4",
     "cors": "^2.8.5",
@@ -36,11 +38,50 @@
     "winston": "^3.3.3"
   },
   "devDependencies": {
+    "@types/jest": "^26.0.9",
     "@types/node": "^14.0.27",
     "eslint": "^7.2.0",
     "eslint-plugin-import": "^2.21.2",
+    "jest": "^26.3.0",
     "nodemon": "^2.0.4",
+    "supertest": "^4.0.2",
+    "ts-jest": "^26.2.0",
     "ts-node": "^8.10.2",
-    "typescript": "^3.9.5"
+    "typescript": "^3.9.7"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "globals": {
+      "ts-jest": {
+        "isolatedModules": true
+      }
+    },
+    "testTimeout": 30000,
+    "testEnvironment": "node",
+    "testMatch": [
+      "<rootDir>/src/**/__test__/**/*.spec.ts?(x)"
+    ],
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts",
+      "node"
+    ],
+    "moduleDirectories": [
+      "node_modules"
+    ],
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "src/**/*.ts"
+    ],
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "/src/__test__/",
+      "/src/index.ts",
+      "/src/lib/logger.ts"
+    ],
+    "testPathIgnorePatterns": [
+      "/node_modules/"
+    ]
   }
 }

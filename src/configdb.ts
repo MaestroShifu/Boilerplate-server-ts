@@ -5,7 +5,7 @@ const dbType: string = 'postgres';
 
 export = {
     type: dbType,
-    url: config.DB_CONNECTION, 
+    url: config.NODE_ENV === INodeEnv.test ? config.DB_CONNECTION_FOR_TESTS : config.DB_CONNECTION, 
     synchronize: config.NODE_ENV === INodeEnv.dev ? true : false,
     logging: config.NODE_ENV === INodeEnv.dev ? true : false,
     entities: indexdb.entities,
